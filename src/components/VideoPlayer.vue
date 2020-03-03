@@ -4,11 +4,6 @@
       <source :src="options.sources[0].src" :type="options.sources[0].type" />
     </video>
     <div class="video-controls">
-      <!-- <div class="play-container">
-                <button class="play" data-icon="P" aria-label="play pause toggle">
-                    <i class="fa fa-play fa-2x"></i>
-                </button>
-      </div>-->
       <button class="play" data-icon="P" aria-label="play pause toggle">
         <i :class="'fa ' + playIcon"></i>
       </button>
@@ -85,6 +80,7 @@ export default {
       const barLength =
         this.timerWrapper.clientWidth *
         (this.media.currentTime / this.media.duration);
+
       this.timerBar.style.width = barLength + 'px';
       this.timerBar.style.height = 35 + 'px';
       this.timerBar.style.backgroundColor = 'gray';
