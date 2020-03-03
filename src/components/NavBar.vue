@@ -3,7 +3,7 @@
     <b-navbar toggleable="md" type="dark" variant="dark" fixed="top">
       <b-navbar-brand :to="{ path: '/' }">
         <img src="../assets/logo.png" width="25" />
-        I-Video
+        IDEO
       </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
