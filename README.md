@@ -1,4 +1,5 @@
-# interactive-video
+# Interactive Video
+As a solution to the coding challenge by Latitude
 
 ## Project setup
 ```
@@ -24,6 +25,3 @@ yarn test:unit
 ```
 yarn lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
