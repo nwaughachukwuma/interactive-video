@@ -1,0 +1,94 @@
+.player {
+  width: 80%;
+  margin-left: 10%;
+}
+
+.player:hover .video-controls,
+.player:focus .video-controls {
+  visibility: visible;
+  opacity: 1;
+}
+
+.video-controls {
+  opacity: 0.5;
+  width: 250px;
+  border-radius: 10px;
+  border: 0.5px solid black;
+  position: absolute;
+  left: 50%;
+  margin-left: -120px;
+
+  background-color: black;
+  box-shadow: 0 1px 2px 0 black;
+
+  transition: 1s all;
+
+  display: flex;
+  /* bottom: 210px; */
+  justify-content: center;
+}
+
+.timer {
+  line-height: 38px;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: monospace;
+  text-shadow: 1px 1px 0px black;
+  color: white;
+  flex: 5;
+  position: relative;
+
+  justify-content: center;
+
+}
+
+.timer div {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.2);
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 28px;
+  z-index: 2;
+}
+
+.timer span {
+  position: absolute;
+  z-index: 3;
+  left: 50px;
+}
+
+/* .play-container button {
+  width: 90px;
+  height: 60px;
+  border: 1px solid red;
+  border-radius: 12px;
+  background-color: red;
+  position: relative;
+  bottom: 150px;
+  left: 75px;
+}
+.play-container button i {
+  color: white;
+} */
+
+button.play {
+  width: 50px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-color: red;
+  background-color: red;
+  outline: none;
+}
+
+button.play i {
+  color: white;
+}
+
+button:before {
+  font-size: 20px;
+  position: relative;
+  content: " ";
+  color: #aaa;
+  text-shadow: 1px 1px 0px black;
+}

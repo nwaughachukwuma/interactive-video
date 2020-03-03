@@ -4,8 +4,7 @@
     <nav-bar />
     <b-container fluid>
       <!-- <router-view/> -->
-      <img alt="Vue logo" src="./assets/logo.png">
-      <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+      <video-interface />
       <!-- <footer-bar /> -->
     </b-container>
   </div>
@@ -13,14 +12,14 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
 import NavBar from '@/components/NavBar.vue';
+import videoInterface from '@/components/VideoInterface.vue'
 
 export default Vue.extend({
   name: 'App',
   components: {
-    HelloWorld,
-    NavBar
+    NavBar,
+    videoInterface
   }
 });
 </script>
@@ -34,4 +33,6 @@ export default Vue.extend({
   color: #2c3e50;
   margin-top: 60px;
 }
+
+@import './assets/css/style.css';
 </style>
