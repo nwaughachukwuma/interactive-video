@@ -5,6 +5,7 @@ A Vue.js solution to the coding exercise by Latitude, and hosted with Firebase h
 Do the following to setup the project
 ```
 - clone the repo
+- cd interactive-video
 - yarn/npm install
 ```
 
@@ -17,6 +18,7 @@ yarn serve
 ```
 yarn build
 ```
+Afterwards, you can either run the build locally using [http-server](https://github.com/http-party/http-server) or deploy the dist folder to your server or Firebase hosting
 
 ### Lints and fixes files
 ```
