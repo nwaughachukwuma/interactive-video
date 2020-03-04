@@ -1,6 +1,8 @@
 # Interactive Video
 A Vue.js solution to the coding exercise by Latitude, and hosted with Firebase hosting at [https://interactive-video-6f911.web.app/](https://interactive-video-6f911.web.app/)
 
+I have implemented solutions 1, 2, 3(b), and 4.
+
 ## Project setup
 Do the following to setup the project
 ```
