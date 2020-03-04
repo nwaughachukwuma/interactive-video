@@ -13,6 +13,8 @@
   opacity: 0.7;
   width: 250px;
   border-radius: 10px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
   border: 0.5px solid black;
   position: absolute;
   left: 50%;
@@ -39,7 +41,6 @@
   position: relative;
 
   justify-content: center;
-
 }
 
 .timer div {
@@ -57,20 +58,6 @@
   z-index: 3;
   left: 50px;
 }
-
-/* .play-container button {
-  width: 90px;
-  height: 60px;
-  border: 1px solid red;
-  border-radius: 12px;
-  background-color: red;
-  position: relative;
-  bottom: 150px;
-  left: 75px;
-}
-.play-container button i {
-  color: white;
-} */
 
 button.play {
   width: 50px;

@@ -1,8 +1,22 @@
 <template>
   <div class="player">
-    <video id="video-container" :controls="options.controls" :autoplay="options.autoplay">
-      <source :src="options.sources[0].src" :type="options.sources[0].type" />
-    </video>
+    <div class="video-container">
+        <video id="video" :controls="options.controls" :autoplay="options.autoplay">
+            <source :src="options.sources[0].src" :type="options.sources[0].type" />
+        </video>
+    </div>
+    <div class="reactivity-table-container">
+        <table id="reactivity-table" v-if="userClicks.length">
+            <tr>
+                <th>Current Time</th>
+                 <th>Hot Spot</th>
+            </tr>
+            <tr v-for="(click, ix) in userClicks" :key="ix">
+                <td>{{click.currentTime}}</td>
+                <td>{{click.offsetX}} X {{click.offsetY}}</td>
+            </tr>
+        </table>
+    </div>
     <div class="video-controls">
       <button class="play" data-icon="P" aria-label="play pause toggle">
         <i :class="'fa ' + playIcon"></i>
@@ -38,7 +52,9 @@ export default {
       timerWrapper: null,
       timer: null,
       timerBar: null,
-      playIcon: "fa-pause"
+      videoContainer: null,
+      playIcon: "fa-pause",
+      userClicks: []
     };
   },
   methods: {
@@ -84,6 +100,13 @@ export default {
       this.timerBar.style.width = barLength + 'px';
       this.timerBar.style.height = 35 + 'px';
       this.timerBar.style.backgroundColor = 'gray';
+    },
+    videoClicked(event) {
+        const rect = this.videoContainer.getBoundingClientRect();
+        const {layerX, layerY, offsetX, offsetY} = event
+        console.log('current time', this.media.currentTime, rect, layerX, layerY, offsetX, offsetY);
+        
+        this.userClicks.push({currentTime: this.media.currentTime, offsetX, offsetY});
     }
   },
   mounted() {
@@ -95,6 +118,8 @@ export default {
     this.timerWrapper = document.querySelector(".timer");
     this.timer = document.querySelector(".timer span");
     this.timerBar = document.querySelector(".timer div");
+
+    this.videoContainer = document.querySelector(".video-container")
 
     this.media.removeAttribute("controls");
     // attempt to autoplay and handle cases where the browser does not support it
@@ -110,6 +135,41 @@ export default {
     this.play.addEventListener("click", this.playPauseMedia);
     this.media.addEventListener("ended", this.stopMedia);
     this.media.addEventListener("timeupdate", this.setTime);
+    this.videoContainer.addEventListener("click", this.videoClicked)
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.reactivity-table-container {
+    max-height: 350px;
+    overflow-y: scroll;
+    width: 23%;
+    position: fixed;
+    top: 60px;
+    left: 5px;
+}
+
+#reactivity-table {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 94%;
+}
+
+#reactivity-table td, #reactivity-table th {
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+
+#reactivity-table tr:nth-child(even){background-color: #f2f2f2;}
+
+#reactivity-table tr:hover {background-color: #ddd;}
+
+#reactivity-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #333;
+  color: white;
+}
+</style>
