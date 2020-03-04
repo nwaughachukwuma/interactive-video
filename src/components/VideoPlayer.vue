@@ -1,7 +1,8 @@
 <template>
   <div class="player">
-    <div class="reactivity-table-container">
-        <table id="reactivity-table" v-if="userClicks.length">
+    <!-- Reactivity Table element -->
+    <div class="reactivity-table-container animated rubberBand" v-if="userClicks.length">
+        <table id="reactivity-table">
             <tr>
                 <th>Current Time</th>
                  <th>Hot Spot</th>
@@ -12,11 +13,13 @@
             </tr>
         </table>
     </div>
+    <!-- Video container -->
     <div class="video-container">
-        <video id="video" :controls="options.controls" :autoplay="options.autoplay">
+        <video class="animated fadeInDownBig duration-3s " id="video" :controls="options.controls" :autoplay="options.autoplay">
             <source :src="options.sources[0].src" :type="options.sources[0].type" />
         </video>
     </div>
+    <!-- Video Controls -->
     <div class="video-controls">
       <button class="play" data-icon="P" aria-label="play pause toggle">
         <i :class="'fa ' + playIcon"></i>
@@ -106,7 +109,9 @@ export default {
         const {layerX, layerY, offsetX, offsetY} = event
         // console.log('current time', this.media.currentTime, rect, layerX, layerY, offsetX, offsetY);
         
-        this.userClicks.push({currentTime: this.media.currentTime, offsetX, offsetY});
+        if (Math.abs(layerX - offsetX) < 5) {
+            this.userClicks.push({currentTime: this.media.currentTime, offsetX, offsetY});
+        }
     }
   },
   mounted() {
