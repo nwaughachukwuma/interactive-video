@@ -1,10 +1,5 @@
 <template>
   <div class="player">
-    <div class="video-container">
-        <video id="video" :controls="options.controls" :autoplay="options.autoplay">
-            <source :src="options.sources[0].src" :type="options.sources[0].type" />
-        </video>
-    </div>
     <div class="reactivity-table-container">
         <table id="reactivity-table" v-if="userClicks.length">
             <tr>
@@ -16,6 +11,11 @@
                 <td>{{click.offsetX}} X {{click.offsetY}}</td>
             </tr>
         </table>
+    </div>
+    <div class="video-container">
+        <video id="video" :controls="options.controls" :autoplay="options.autoplay">
+            <source :src="options.sources[0].src" :type="options.sources[0].type" />
+        </video>
     </div>
     <div class="video-controls">
       <button class="play" data-icon="P" aria-label="play pause toggle">
@@ -142,12 +142,29 @@ export default {
 
 <style lang="scss" scoped>
 .reactivity-table-container {
-    max-height: 350px;
+    max-height: 355px;
     overflow-y: scroll;
     width: 23%;
     position: fixed;
     top: 60px;
     left: 5px;
+}
+
+@media screen and (max-width: 1024px){
+    .reactivity-table-container {
+        width: 17.5%;
+    }
+}
+
+@media screen and (max-width: 990px){
+    .reactivity-table-container {
+        width: 90%;
+        margin-left: 7.5%;
+        margin-bottom: 10px;
+        position: relative;
+        top: 0;
+        margin-top: 50px;
+    }
 }
 
 #reactivity-table {
@@ -168,7 +185,7 @@ export default {
 #reactivity-table th {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: left;
+  text-align: center;
   background-color: #333;
   color: white;
 }
