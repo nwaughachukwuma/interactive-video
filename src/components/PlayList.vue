@@ -1,62 +1,111 @@
 <template>
   <div class="scrolling-wrapper">
-    <div class="card" v-for="(movie, ix) in playlists" :key="ix">
-        <img :src="movie.src" alt="" >
+    <div class="card" v-for="(movie, ix) in playlists" :key="ix" :id="'card'+ix">
+      <img :src="movie.src" alt />
     </div>
-    <!-- <div class="card">
-      <h2>Card1</h2>
-    </div>
-    <div class="card">
-      <h2>Cardx</h2>
-    </div> -->
+    <div></div>
   </div>
 </template>
 
 <script>
 export default {
-    name: 'PlayList',
-    data() {
-        return{
-            playlists: [
-                {
-                    src: require('../assets/img/movie-posters/img1.jpeg')
-                },
-                {
-                    src: require('../assets/img/movie-posters/img2.jpeg')
-                },
-                {
-                    src: require('../assets/img/movie-posters/img3.jpeg')
-                },
-                {
-                    src: require('../assets/img/movie-posters/img4.jpeg')
-                },
-                {
-                    src: require('../assets/img/movie-posters/img5.jpeg')
-                },
-                {
-                    src: require('../assets/img/movie-posters/img6.jpeg')
-                },
-                {
-                    src: require('../assets/img/movie-posters/img7.jpeg')
-                },
-                {
-                    src: require('../assets/img/movie-posters/img8.jpeg')
-                },
-                {
-                    src: require('../assets/img/movie-posters/img9.jpeg')
-                },
-                {
-                    src: require('../assets/img/movie-posters/img10.jpeg')
-                },
-                {
-                    src: require('../assets/img/movie-posters/img11.jpeg')
-                },
-                {
-                    src: require('../assets/img/movie-posters/img12.jpeg')
-                }
-            ]
+  name: "PlayList",
+  data() {
+    return {
+      playlists: [
+        {
+          src: require("../assets/img/movie-posters/img1.jpeg")
+        },
+        {
+          src: require("../assets/img/movie-posters/img2.jpeg")
+        },
+        {
+          src: require("../assets/img/movie-posters/img3.jpeg")
+        },
+        {
+          src: require("../assets/img/movie-posters/img4.jpeg")
+        },
+        {
+          src: require("../assets/img/movie-posters/img5.jpeg")
+        },
+        {
+          src: require("../assets/img/movie-posters/img6.jpeg")
+        },
+        {
+          src: require("../assets/img/movie-posters/img7.jpeg")
+        },
+        {
+          src: require("../assets/img/movie-posters/img8.jpeg")
+        },
+        {
+          src: require("../assets/img/movie-posters/img9.jpeg")
+        },
+        {
+          src: require("../assets/img/movie-posters/img10.jpeg")
+        },
+        {
+          src: require("../assets/img/movie-posters/img11.jpeg")
+        },
+        {
+          src: require("../assets/img/movie-posters/img12.jpeg")
         }
+      ]
+    };
+  },
+  methods: {
+    createObserver(cardElement) {
+      // let observer;
+      const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: this.buildThresholdList()
+      };
+
+      const observer = new IntersectionObserver(this.handleIntersect, options);
+      observer.observe(cardElement);
     },
+    buildThresholdList() {
+      const thresholds = [];
+      const numSteps = 20;
+
+      for (let i = 1.0; i <= numSteps; i++) {
+        const ratio = i / numSteps;
+        thresholds.push(ratio);
+      }
+
+      thresholds.push(0);
+      return thresholds;
+    },
+    handleIntersect(entries) {
+      // observer
+    //   let prevRatio = 0.0;
+      // const increasingColor = "rgba(40, 40, 190, ratio)";
+      // const decreasingColor = "rgba(190, 40, 40, ratio)";
+
+      entries.forEach(entry => {
+        // if (entry.intersectionRatio > prevRatio) {
+        //     entry.target.style.backgroundColor = increasingColor.replace("ratio", entry.intersectionRatio);
+        // } else {
+        //     entry.target.style.backgroundColor = decreasingColor.replace("ratio", entry.intersectionRatio);
+        // }
+        entry.target.style.opacity = entry.intersectionRatio;
+        // prevRatio = entry.intersectionRatio;
+      });
+    }
+  },
+  mounted() {
+    window.addEventListener(
+      "load",
+      () => {
+        // event
+        this.playlists.forEach((el, ix) => {
+          const cardElement = document.querySelector(`#card${ix}`);
+          this.createObserver(cardElement);
+        });
+      },
+      false
+    );
+  }
 };
 </script>
 
@@ -74,19 +123,17 @@ export default {
 }
 
 .scrolling-wrapper {
+  width: 70%;
   height: 145px;
   margin-bottom: 20px;
-  width: 70%;
   padding: 5px;
-
   border: 2px solid black;
   border-radius: 10px;
 
   padding-left: 5px;
-  padding-right: 10px;
+  padding-right: 5px;
   margin-top: 50px;
   margin-left: 15%;
-
   align-items: center;
 
   -webkit-overflow-scrolling: touch;
@@ -96,7 +143,7 @@ export default {
 }
 
 .card {
-//   opacity: 0;
+  transition: opacity 1s; //, border 1s;
   border: 1px solid gray;
   width: 150px;
   height: auto;
@@ -108,17 +155,20 @@ export default {
   box-shadow: 0 1px 2px 0 rgba(32, 32, 32, 0.6);
 }
 
-.card:focus {
-    opacity: 1
-}
-
-.card:last-child {
-  margin-right: 15px;
-}
-
 .card img {
-    width: 100%; 
-    height: 130px;
-    border-radius: 5px;
+  width: 100%;
+  height: 130px;
+  border-radius: 5px;
+}
+
+.scrolling-wrapper div:last-child {
+  visibility: hidden;
+  width: 5px;
+  height: 70px;
+  margin-left: 5px;
+}
+.scrolling-wrapper div:last-child::after {
+  content: "0";
+  width: 5px;
 }
 </style>
