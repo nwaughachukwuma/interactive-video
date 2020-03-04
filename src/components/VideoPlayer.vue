@@ -97,6 +97,13 @@ export default {
     this.timerBar = document.querySelector(".timer div");
 
     this.media.removeAttribute("controls");
+    // attempt to autoplay and handle cases where the browser does not support it
+    if (this.media.paused) {
+        this.$nextTick(() => {
+            this.media.play()
+                .catch(() => this.playIcon = 'fa-play');
+        });
+    }
     this.controls.style.visibility = "visible";
 
     // add event listeners to the media element
