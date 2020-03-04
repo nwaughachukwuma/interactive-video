@@ -5,9 +5,7 @@
         <img src="../assets/logo.png" width="25" />
         IDEO
       </b-navbar-brand>
-
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item :to="{ path: '/' }" data-cy="nav-bar-dashboard">
@@ -36,16 +34,10 @@ export default {
   data() {
       return {
           user: {
-              type: 'viewer',
+              type: 'Viewer',
               role: 'basic'
           }
       }
-  },
-  computed: {
-
-  },
-  methods: {
-
   }
 };
 </script>

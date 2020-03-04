@@ -104,7 +104,7 @@ export default {
     videoClicked(event) {
         const rect = this.videoContainer.getBoundingClientRect();
         const {layerX, layerY, offsetX, offsetY} = event
-        console.log('current time', this.media.currentTime, rect, layerX, layerY, offsetX, offsetY);
+        // console.log('current time', this.media.currentTime, rect, layerX, layerY, offsetX, offsetY);
         
         this.userClicks.push({currentTime: this.media.currentTime, offsetX, offsetY});
     }

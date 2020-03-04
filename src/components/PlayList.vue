@@ -78,18 +78,11 @@ export default {
     },
     handleIntersect(entries) {
       // observer
-    //   let prevRatio = 0.0;
-      // const increasingColor = "rgba(40, 40, 190, ratio)";
-      // const decreasingColor = "rgba(190, 40, 40, ratio)";
-
       entries.forEach(entry => {
         // if (entry.intersectionRatio > prevRatio) {
         //     entry.target.style.backgroundColor = increasingColor.replace("ratio", entry.intersectionRatio);
-        // } else {
-        //     entry.target.style.backgroundColor = decreasingColor.replace("ratio", entry.intersectionRatio);
-        // }
+        // } 
         entry.target.style.opacity = entry.intersectionRatio;
-        // prevRatio = entry.intersectionRatio;
       });
     }
   },
