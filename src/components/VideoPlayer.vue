@@ -16,31 +16,25 @@
             <source :src="options.sources[0].src" :type="options.sources[0].type" />
         </video>
     </div>
+
     <!-- Video Controls -->
-    <div class="video-controls" ref="videoControlsEl">
-      <button 
-        class="play" 
-        data-icon="P" 
-        aria-label="play pause toggle" 
-        @click="playPauseMedia"
-      >
-        <i :class="'fa ' + playIcon"></i>
-      </button>
-      <div class="timer" ref="timerWrapperEl">
-        <div ref="timerBarEl"></div>
-        <span aria-label="timer" ref="timerEl">00:00</span>
-      </div>
-    </div>
+    <video-controls 
+      ref="videoControlsEl" 
+      :media="media" 
+      :playIconState="playIcon" 
+    />
   </div>
 </template>
 
 <script>
 import ReactivityTable from './ReactivityTable';
+import VideoControls from './VideoControls'
 
 export default {
   name: "VideoPlayer",
   components: {
-    ReactivityTable
+    ReactivityTable,
+    VideoControls
   },
   props: {
     options: {
@@ -59,24 +53,12 @@ export default {
       media: null,
       controls: null,
       play: null,
-      timerWrapper: null,
-      timer: null,
-      timerBar: null,
       videoContainer: null,
-      playIcon: "fa-pause",
-      userClicks: []
+      userClicks: [],
+      playIcon: 'fa-pause'
     };
   },
   methods: {
-    playPauseMedia() {
-      if (this.media.paused) {
-        this.playIcon = "fa-pause";
-        this.media.play();
-      } else {
-        this.playIcon = "fa-play";
-        this.media.pause();
-      }
-    },
     stopMedia() {
       this.media.pause();
       this.media.currentTime = 0;
@@ -101,15 +83,15 @@ export default {
       }
 
       const mediaTime = minuteValue + ":" + secondValue;
-      this.timer.textContent = mediaTime;
+      this.controls.$refs.timerEl.textContent = mediaTime;
 
       const barLength =
-        this.timerWrapper.clientWidth *
+        this.controls.$refs.timerWrapperEl.clientWidth *
         (this.media.currentTime / this.media.duration);
 
-      this.timerBar.style.width = barLength + 'px';
-      this.timerBar.style.height = 35 + 'px';
-      this.timerBar.style.backgroundColor = 'gray';
+      this.controls.$refs.timerBarEl.style.width = barLength + 'px';
+      this.controls.$refs.timerBarEl.style.height = 35 + 'px';
+      this.controls.$refs.timerBarEl.style.backgroundColor = 'gray';
     },
     videoClicked(event) {
         const rect = this.videoContainer.getBoundingClientRect();
@@ -123,22 +105,12 @@ export default {
   },
   mounted() {
     this.controls = this.$refs.videoControlsEl;
-    this.controls.style.visibility = "visible";
+    this.controls.$refs.videoControlsEl.style.visibility = "visible";
 
-    this.timerWrapper = this.$refs.timerWrapperEl; 
-    this.timer = this.$refs.timerEl; 
-    this.timerBar = this.$refs.timerBarEl;
     this.videoContainer = this.$refs.videoContainer;
 
     this.media = this.$refs.videoEl;
     this.media.removeAttribute("controls");
-    // attempt to autoplay and handle cases where the browser does not support it
-    if (this.media.paused) {
-        this.$nextTick(() => {
-            this.media.play()
-                .catch(() => this.playIcon = 'fa-play');
-        });
-    }
     // add event listeners to the media element
     this.media.addEventListener("ended", this.stopMedia);
     this.media.addEventListener("timeupdate", this.setTime);
