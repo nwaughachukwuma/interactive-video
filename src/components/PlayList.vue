@@ -1,6 +1,12 @@
 <template>
   <div class="scrolling-wrapper">
-    <div class="card" v-for="(movie, ix) in playlists" :key="ix" :id="'card'+ix">
+    <div 
+      class="card" 
+      v-for="(movie, ix) in playlists" 
+      :key="ix" 
+      :id="'card'+ix"
+      ref="cards"
+    >
       <img :src="movie.src" alt />
     </div>
     <div></div>
@@ -92,7 +98,7 @@ export default {
       () => {
         // event
         this.playlists.forEach((el, ix) => {
-          const cardElement = document.querySelector(`#card${ix}`);
+          const cardElement = this.$refs.cards[ix];
           this.createObserver(cardElement);
         });
       },
