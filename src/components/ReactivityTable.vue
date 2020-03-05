@@ -1,11 +1,13 @@
 <template>
     <div 
-        class="reactivity-table-container animated rubberBand" 
+        class="reactivity-table-container" 
+        :class="computeClass"
+        style="animation-delay: 0.5s animation-duration: 2s"
         v-if="userClicks.length"
     >
         <table id="reactivity-table">
             <tr>
-                <th>Current Time</th>
+                <th>Time(s)</th>
                  <th>Hot Spot</th>
             </tr>
             <tr v-for="(click, ix) in userClicks" :key="ix">
@@ -23,6 +25,38 @@ export default {
         userClicks: {
             type: Array,
             default: () => []
+        }
+    },
+    data() {
+        return {
+            computeClass: {
+                "animated": true,
+                "rubberBand": true,
+                "pulse": false
+            }
+        }
+    },
+    watch: {
+        userClicks: {
+            handler(val, oldVal) {
+                if (oldVal.length) {
+                    this.computeClass = {
+                        "animated": true,
+                        "rubberBand": false,
+                        "pulse": false
+                    }
+                    setTimeout(() => {
+                        this.computeClass = {
+                            "animated": true,
+                            "rubberBand": false,
+                            "pulse": true
+                        }
+                        
+                        this.$$forceUpdate
+                    }, 250)
+                }
+            },
+            immediate: false
         }
     }
 }
