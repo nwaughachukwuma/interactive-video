@@ -14,19 +14,30 @@
         </table>
     </div>
     <!-- Video container -->
-    <div class="video-container">
-        <video class="animated fadeInDownBig duration-3s " id="video" :controls="options.controls" :autoplay="options.autoplay">
+    <div class="video-container" ref="videoContainer" @click="videoClicked">
+        <video 
+          ref="videoEl" 
+          class="animated fadeInDownBig duration-3s" 
+          id="video" 
+          :controls="options.controls" 
+          :autoplay="options.autoplay"
+        >
             <source :src="options.sources[0].src" :type="options.sources[0].type" />
         </video>
     </div>
     <!-- Video Controls -->
-    <div class="video-controls">
-      <button class="play" data-icon="P" aria-label="play pause toggle">
+    <div class="video-controls" ref="videoControlsEl">
+      <button 
+        class="play" 
+        data-icon="P" 
+        aria-label="play pause toggle" 
+        @click="playPauseMedia"
+      >
         <i :class="'fa ' + playIcon"></i>
       </button>
-      <div class="timer">
-        <div></div>
-        <span aria-label="timer">00:00</span>
+      <div class="timer" ref="timerWrapperEl">
+        <div ref="timerBarEl"></div>
+        <span aria-label="timer" ref="timerEl">00:00</span>
       </div>
     </div>
   </div>
@@ -115,17 +126,15 @@ export default {
     }
   },
   mounted() {
-    this.media = document.querySelector("video");
-    this.controls = document.querySelector(".video-controls");
+    this.controls = this.$refs.videoControlsEl;
+    this.controls.style.visibility = "visible";
 
-    this.play = document.querySelector(".play");
+    this.timerWrapper = this.$refs.timerWrapperEl; 
+    this.timer = this.$refs.timerEl; 
+    this.timerBar = this.$refs.timerBarEl;
+    this.videoContainer = this.$refs.videoContainer;
 
-    this.timerWrapper = document.querySelector(".timer");
-    this.timer = document.querySelector(".timer span");
-    this.timerBar = document.querySelector(".timer div");
-
-    this.videoContainer = document.querySelector(".video-container")
-
+    this.media = this.$refs.videoEl;
     this.media.removeAttribute("controls");
     // attempt to autoplay and handle cases where the browser does not support it
     if (this.media.paused) {
@@ -134,13 +143,9 @@ export default {
                 .catch(() => this.playIcon = 'fa-play');
         });
     }
-    this.controls.style.visibility = "visible";
-
     // add event listeners to the media element
-    this.play.addEventListener("click", this.playPauseMedia);
     this.media.addEventListener("ended", this.stopMedia);
     this.media.addEventListener("timeupdate", this.setTime);
-    this.videoContainer.addEventListener("click", this.videoClicked)
   }
 };
 </script>
