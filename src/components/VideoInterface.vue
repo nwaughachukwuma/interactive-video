@@ -1,20 +1,27 @@
 <template>
   <div>
-    <video-player :options="videoOptions" />
+    <!-- Reactivity Table element -->
+    <div class="reactivity-table">
+      <reactivity-table :userClicks="userClicks" />
+    </div>
+    <!-- Video player component -->
+    <video-player :options="videoOptions" @videoClicked="videoClicked" />
+    <!-- Play list with thumbnails -->
     <play-list />
   </div>
 </template>
 
 <script>
-import VideoPlayer from './VideoPlayer'
-import PlayList from './PlayList'
-
+import VideoPlayer from "./VideoPlayer";
+import PlayList from "./PlayList";
+import ReactivityTable from "./ReactivityTable";
 
 export default {
   name: "VideoInterface",
   components: {
     VideoPlayer,
-    PlayList
+    PlayList,
+    ReactivityTable
   },
   data() {
     return {
@@ -27,8 +34,14 @@ export default {
             type: "video/mp4"
           }
         ]
-      }
+      },
+      userClicks: []
     };
+  },
+  methods: {
+    videoClicked({ data }) {
+      this.userClicks = data;
+    }
   }
 };
 </script>

@@ -1,9 +1,6 @@
 <template>
   <div class="player">
 
-    <!-- Reactivity Table element -->
-    <reactivity-table :userClicks="userClicks" />
-
     <!-- Video container -->
     <div class="video-container" ref="videoContainer" @click="videoClicked">
         <video 
@@ -23,17 +20,16 @@
       :media="media" 
       :playIconState="playIcon" 
     />
+    
   </div>
 </template>
 
 <script>
-import ReactivityTable from './ReactivityTable';
 import VideoControls from './VideoControls'
 
 export default {
   name: "VideoPlayer",
   components: {
-    ReactivityTable,
     VideoControls
   },
   props: {
@@ -94,13 +90,14 @@ export default {
       this.controls.$refs.timerBarEl.style.backgroundColor = 'gray';
     },
     videoClicked(event) {
-        const rect = this.videoContainer.getBoundingClientRect();
-        const {layerX, layerY, offsetX, offsetY} = event
-        // console.log('current time', this.media.currentTime, rect, layerX, layerY, offsetX, offsetY);
-        
-        if (Math.abs(layerX - offsetX) < 5) {
-            this.userClicks.push({currentTime: this.media.currentTime, offsetX, offsetY});
-        }
+      const rect = this.videoContainer.getBoundingClientRect();
+      const {layerX, layerY, offsetX, offsetY} = event
+      // console.log('current time', this.media.currentTime, rect, layerX, layerY, offsetX, offsetY);
+      
+      if (Math.abs(layerX - offsetX) < 5) {
+        this.userClicks.push({currentTime: this.media.currentTime, offsetX, offsetY});
+      }
+      this.$emit('videoClicked', {data: this.userClicks});
     }
   },
   mounted() {
