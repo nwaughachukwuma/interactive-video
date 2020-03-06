@@ -3,6 +3,10 @@ A Vue.js solution to the coding exercise by Latitude, and hosted with Firebase h
 
 I have implemented solutions 1, 2, 3(b), and 4.
 
+## Prerequisites
+- The project uses faker library to generate random comments to do this, ensure you have [json-server](https://github.com/typicode/json-server) installed globally.
+- Go to the dir `~src/assets/json` and run `json-server generator.js`. This would create a db-`timestamp`.json file which you should rename to comments.json
+
 ## Project setup
 Do the following to setup the project
 ```
