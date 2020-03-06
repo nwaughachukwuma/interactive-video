@@ -1,12 +1,13 @@
 <template>
     <b-container fluid class="video-comments-wrapper">
         <b-card
-            sub-title="Card Title"
+            sub-title="Video Comment"
             style="max-width: 80%; left: 10%;"
-            class="mb-1"
+            class="mb-1 animated fadeInUp duration-3s"
+            v-if="!isEmpty(commentPlaceHolder)"
         >
             <b-card-text>
-                {{comment.text}}
+                {{commentPlaceHolder.text}}
             </b-card-text>
             <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
         </b-card>
@@ -20,11 +21,33 @@ export default {
             type: Object,
             default() {
                 return {
-                    text: 'Lorem ipsum dolor simet',
-                    time: 0,
-                    mediaTime: '00:00'
+
                 }
             }
+        }
+    },
+    data() {
+        return {
+            commentPlaceHolder: {}
+        }
+    },
+    methods: {
+        isEmpty(obj) {
+            if (obj == null) return true
+            return Object.keys(obj).length < 1
+        }
+    },
+    watch: {
+        comment: {
+            handler(val) {
+                if (!this.isEmpty(val)) {
+                    this.commentPlaceHolder = val;
+                    setTimeout(() => {
+                        this.commentPlaceHolder = {}
+                    }, 3000)
+                }
+            },
+            immediate: false
         }
     }
 }

@@ -14,7 +14,7 @@
         </video>
 
         <!-- Video Comments  -->
-        <video-comments />
+        <video-comments :comment="commentInTime" />
     </div>
 
     <!-- Video Controls -->
@@ -30,6 +30,7 @@
 <script>
 import VideoControls from './VideoControls'
 import VideoComments from './VideoComments'
+import Comments from '@/assets/json/comments.json'
 
 export default {
   name: "VideoPlayer",
@@ -56,7 +57,9 @@ export default {
       play: null,
       videoContainer: null,
       userClicks: [],
-      playIcon: 'fa-pause'
+      playIcon: 'fa-pause',
+      playbackLoop: null,
+      commentInTime: {}
     };
   },
   methods: {
@@ -85,6 +88,7 @@ export default {
 
       const mediaTime = minuteValue + ":" + secondValue;
       this.controls.$refs.timerEl.textContent = mediaTime;
+      this.playbackLoop = this.media.currentTime.toFixed(0);
 
       const barLength =
         this.controls.$refs.timerWrapperEl.clientWidth *
@@ -116,6 +120,17 @@ export default {
     // add event listeners to the media element
     this.media.addEventListener("ended", this.stopMedia);
     this.media.addEventListener("timeupdate", this.setTime);
+  },
+  watch: {
+    playbackLoop: {
+      handler(val) {
+        const comments = Comments.comments || [];
+        if (comments.length) {
+          this.commentInTime = comments.find(el =>  el.time === +val) || {}
+        }
+      },
+      immediate: false
+    }
   }
 };
 </script>
