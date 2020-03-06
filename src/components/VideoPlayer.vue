@@ -14,7 +14,7 @@
         </video>
 
         <!-- Video Comments  -->
-        <video-comments :comment="commentInTime" />
+        <video-comments :comment="commentInTime" :media="media && media.currentTime" />
     </div>
 
     <!-- Video Controls -->

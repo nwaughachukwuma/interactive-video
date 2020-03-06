@@ -24,6 +24,9 @@ export default {
 
                 }
             }
+        },
+        media: {
+            type: Number
         }
     },
     data() {
@@ -42,13 +45,19 @@ export default {
             handler(val) {
                 if (!this.isEmpty(val)) {
                     this.commentPlaceHolder = val;
-                    setTimeout(() => {
-                        this.commentPlaceHolder = {}
-                    }, 3000)
                 }
             },
             immediate: false
-        }
+        },
+        media: {
+            handler(val) {
+                const cph = this.commentPlaceHolder
+                if (val && !this.isEmpty(cph) && val - cph.time >= 3) {
+                    this.commentPlaceHolder = {}
+                }
+            },
+            immediate: true
+        },
     }
 }
 </script>
