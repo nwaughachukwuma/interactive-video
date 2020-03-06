@@ -1,12 +1,16 @@
 <template>
     <b-container fluid class="video-comments-wrapper">
+        <!-- sub-title="Video Comment" -->
         <b-card
-            sub-title="Video Comment"
             style="max-width: 80%; left: 10%;"
-            class="mb-1 animated fadeInUp duration-3s"
+            class="mb-1 text-center animated fadeInUp duration-3s"
             v-if="!isEmpty(commentPlaceHolder)"
+            bg-variant="dark" 
+            header="Video Comment 💬" 
+            header-tag="h4"
+            text-variant="white"
         >
-            <b-card-text>
+            <b-card-text class="text-primary">
                 {{commentPlaceHolder.text}}
             </b-card-text>
             <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
@@ -53,6 +57,9 @@ export default {
             handler(val) {
                 const cph = this.commentPlaceHolder
                 if (val && !this.isEmpty(cph) && val - cph.time >= 3) {
+                    this.commentPlaceHolder = {}
+                }
+                if (val === 0) {
                     this.commentPlaceHolder = {}
                 }
             },
