@@ -21,7 +21,7 @@ export default {
   components: {
     VideoPlayer,
     PlayList,
-    ReactivityTable
+    ReactivityTable,
   },
   data() {
     return {

@@ -5,13 +5,16 @@
     <div class="video-container" ref="videoContainer" @click="videoClicked">
         <video 
           ref="videoEl" 
-          class="animated fadeInDownBig duration-3s" 
+          class="animated fadeInDownBig duration-3s"
           id="video" 
           :controls="options.controls" 
           :autoplay="options.autoplay"
         >
-            <source :src="options.sources[0].src" :type="options.sources[0].type" />
+          <source :src="options.sources[0].src" :type="options.sources[0].type" />
         </video>
+
+        <!-- Video Comments  -->
+        <video-comments />
     </div>
 
     <!-- Video Controls -->
@@ -20,17 +23,19 @@
       :media="media" 
       :playIconState="playIcon" 
     />
-    
+
   </div>
 </template>
 
 <script>
 import VideoControls from './VideoControls'
+import VideoComments from './VideoComments'
 
 export default {
   name: "VideoPlayer",
   components: {
-    VideoControls
+    VideoControls,
+    VideoComments
   },
   props: {
     options: {
