@@ -1,6 +1,6 @@
 <template>
     <div 
-        class="reactivity-table-container" 
+        class="reactivity-table-container animated" 
         :class="computeClass"
         style="animation-delay: 0.5s animation-duration: 2s"
         v-if="userClicks.length"
@@ -11,7 +11,7 @@
                  <th>Hot Spot</th>
             </tr>
             <tr v-for="(click, ix) in userClicks" :key="ix">
-                <td>{{click.currentTime}}</td>
+                <td>{{click.currentTime.toFixed(2)}}</td>
                 <td>{{click.offsetX}} X {{click.offsetY}}</td>
             </tr>
         </table>
@@ -30,7 +30,6 @@ export default {
     data() {
         return {
             computeClass: {
-                "animated": true,
                 "rubberBand": true,
                 "pulse": false
             }
@@ -41,18 +40,14 @@ export default {
             handler(val, oldVal) {
                 if (oldVal.length) {
                     this.computeClass = {
-                        "animated": true,
                         "rubberBand": false,
                         "pulse": false
                     }
                     setTimeout(() => {
                         this.computeClass = {
-                            "animated": true,
-                            "rubberBand": false,
                             "pulse": true
                         }
-                        
-                        this.$$forceUpdate
+                        // this.$forceUpdate
                     }, 250)
                 }
             },
