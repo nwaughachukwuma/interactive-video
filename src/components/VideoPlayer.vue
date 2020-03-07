@@ -84,8 +84,22 @@ export default {
       this.playIcon = "fa-play";
     },
     setTime() {
-      const minutes = Math.floor(this.media.currentTime / 60);
-      const seconds = Math.floor(this.media.currentTime - minutes * 60);
+      const mediaTime = this.extractMediaTime(this.media.currentTime);
+      this.controls.$refs.timerEl.textContent = mediaTime;
+
+      this.playbackLoop = this.media.currentTime.toFixed(0);
+
+      const barLength =
+        this.controls.$refs.timerWrapperEl.clientWidth *
+        (this.media.currentTime / this.media.duration);
+
+      this.controls.$refs.timerBarEl.style.width = barLength + 'px';
+      this.controls.$refs.timerBarEl.style.height = 35 + 'px';
+      this.controls.$refs.timerBarEl.style.backgroundColor = 'gray';
+    },
+    extractMediaTime(currentTime) {
+      const minutes = Math.floor(currentTime / 60);
+      const seconds = Math.floor(currentTime - minutes * 60);
       let minuteValue;
       let secondValue;
 
@@ -101,17 +115,7 @@ export default {
         secondValue = seconds;
       }
 
-      const mediaTime = minuteValue + ":" + secondValue;
-      this.controls.$refs.timerEl.textContent = mediaTime;
-      this.playbackLoop = this.media.currentTime.toFixed(0);
-
-      const barLength =
-        this.controls.$refs.timerWrapperEl.clientWidth *
-        (this.media.currentTime / this.media.duration);
-
-      this.controls.$refs.timerBarEl.style.width = barLength + 'px';
-      this.controls.$refs.timerBarEl.style.height = 35 + 'px';
-      this.controls.$refs.timerBarEl.style.backgroundColor = 'gray';
+      return minuteValue + ":" + secondValue
     },
     videoClicked(event) {
       const rect = this.videoContainer.getBoundingClientRect();
@@ -139,9 +143,25 @@ export default {
   watch: {
     playbackLoop: {
       handler(val) {
-        const comments = Comments.comments || [];
-        if (comments.length) {
-          this.commentInTime = comments.find(el =>  el.time === +val) || {}
+        // const comments = Comments.comments || [];
+        // if (comments.length) {
+        //   this.commentInTime = comments.find(el =>  el.time === +val) || {}
+        // }
+
+        // get the video comments from webvtt file
+        const textTracks = this.media.textTracks[0];
+        if (textTracks && textTracks.cues) {
+          const activeCue = Object.values(textTracks.cues)
+            .find(el => el.startTime === +val);
+
+          if (activeCue) {
+            this.commentInTime = {
+              text: activeCue.text.replace(/(<([^>]+)>)/ig, ''),
+              time: activeCue.startTime,
+              id: activeCue.id,
+              mediaTime: this.extractMediaTime(+val)
+            }
+          }
         }
       },
       immediate: false
