@@ -31,7 +31,7 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx", "src/components/charts/LineChart.js", "src/components/charts/InteractionChart.js"
+    "tests/**/*.tsx", "src/components/charts/LineChart.js", "src/components/charts/InteractionChart.js", "src/components/charts/BarChart.js"
   ],
   "exclude": [
     "node_modules"

@@ -16,6 +16,7 @@
         Ended: {{videoEnded || videoWatched == 0}}
       </b-card-text>
       <line-chart :chart-data="datacollection"></line-chart>
+      <bar-chart :chart-data="datacollection"></bar-chart>
       <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
 
       <b-card-footer footer-class="chart-footer">
@@ -32,10 +33,12 @@
 
 <script>
 import LineChart from "./LineChart.js";
+import BarChart from "./BarChart.js";
 
 export default {
   components: {
-    LineChart
+    LineChart,
+    BarChart
   },
   props: {
     showChart: {
