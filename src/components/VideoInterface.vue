@@ -30,8 +30,13 @@ export default {
         controls: false,
         sources: [
           {
-            src: require("../assets/big_buck_bunny.mp4"),
+            src: "media/video/big_buck_bunny.mp4", 
+            // require("../assets/big_buck_bunny.mp4"),
             type: "video/mp4"
+          },
+          {
+            src: "media/video/upc-tobymanley.theora.ogg",
+            type: "video/ogg"
           }
         ]
       },

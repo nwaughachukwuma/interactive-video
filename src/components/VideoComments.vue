@@ -1,8 +1,10 @@
 <template>
+    <!-- another approach is to use WebVTT to create subtitles for the video track -->
+    <!-- https://w3c.github.io/webvtt/ -->
     <b-container fluid class="video-comments-wrapper">
         <!-- sub-title="Video Comment" -->
         <b-card
-            style="max-width: 80%; left: 10%;"
+            style="max-width: 60%; left: 20%;"
             class="mb-1 text-center animated fadeInUp duration-3s"
             v-if="!isEmpty(commentPlaceHolder)"
             bg-variant="dark" 

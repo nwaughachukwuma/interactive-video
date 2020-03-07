@@ -1,0 +1,95 @@
+WEBVTT - SAMPLE FILE
+
+NOTE
+This is a sample WebVtt file
+
+1
+00:00:03.500 --> 00:00:05.000 D:vertical A:start
+- Everyone wants the most from life
+- And this is a very Ok thing, really
+
+2
+00:00:06.000 --> 00:00:09.000 vertical:lr A:start
+<v Roger Bingham>Like internet experiences that are rich <b>and</b> entertaining
+
+3
+00:00:11.000 --> 00:00:14.000 A:end
+Phone conversations where people truly <c.highlight>connect</c>
+
+4
+00:00:14.500 --> 00:00:18.000 align:start line:0%
+Your favourite TV programmes ready to watch at the touch of a button
+
+5
+00:00:19.000 --> 00:00:24.000
+Which is why we are bringing TV, internet and phone together in <c.highlight>one</c> super package
+
+6
+00:00:24.500 --> 00:00:26.000
+<c.highlight>One</c> simple way to get everything
+
+7
+00:00:26.500 --> 00:00:27.500 L:12%
+UPC
+
+8
+00:00:28.000 --> 00:00:30.000 L:75%
+<v.animated.rubberBand>Simply for <u>everyone</u>
+
+123
+00:00:30.500 --> 00:00:33.500 align:left size:50%
+<v Roger Bingham>When we e-mailed—
+
+9
+00:00:34.000 --> 00:00:35.500
+<v.first.loud Esme>It’s a blue apple tree!
+
+10
+00:00:36.000 --> 00:00:37.050
+<v Mary>No way!
+
+11
+00:00:38.000 --> 00:00:39.050
+<v Esme>Hee!</v> <i>laughter</i>
+
+12
+00:00:40.000 --> 00:00:42.050
+<v.loud Mary>That’s awesome!
+
+13
+00:00:43.000 --> 00:00:50.000
+<c.animated.rubberBand>[Test]</c>
+
+00:00:18.700 --> 00:00:21.500 align:start size:32% line:90
+<c.de>Diese Klinge birgt eine finstere Vergangenheit.</c>
+
+00:00:18.700 --> 00:00:21.500 size:32% line:90
+<c.en>This blade has a dark past.</c>
+
+00:00:18.700 --> 00:00:21.500 align:end size:32% line:90
+<c.es>Esta hoja tiene un pasado oscuro.</c>
+
+14
+00:00:51.500 --> 00:00:53.500
+When the moon <00:00:52.500>hits your eye
+
+15
+00:00:53.500 --> 00:00:56.500
+Like a <00:00:54.000>big-a <00:00:55.000>pizza <00:00:56.000>pie
+
+::cue(v[voice='Test']) {
+   color:#bff;
+   background:#0095dd;
+}
+::cue(.de) {
+   color: #000;
+   background-color: #ffcc00;
+}
+::cue(.en) {
+   color: #fff;
+   background-color: #00247d;
+}
+::cue(.es) {
+   color: #f1bf00;
+   background-color: #aa151b;
+}

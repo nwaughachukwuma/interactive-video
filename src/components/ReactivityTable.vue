@@ -65,6 +65,8 @@ export default {
     position: fixed;
     top: 60px;
     left: 5px;
+
+    transition: 1s all;
 }
 
 @media screen and (max-width: 1024px){

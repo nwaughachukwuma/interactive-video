@@ -7,12 +7,27 @@
           ref="videoEl" 
           class="animated fadeInDownBig duration-3s"
           id="video" 
-          :controls="options.controls" 
+          :controls="options.controls"
           :autoplay="options.autoplay"
+          preload="metadata"
         >
           <source :src="options.sources[0].src" :type="options.sources[0].type" />
-        </video>
+          <source :src="options.sources[1].src" :type="options.sources[1].type" />
+          <!-- another approach is to use WebVTT to create subtitles for the video track -->
+          <!-- https://w3c.github.io/webvtt/ --> 
+          <!-- https://developer.mozilla.org/en-US/docs/Web/Guide/Audio_and_video_delivery/Adding_captions_and_subtitles_to_HTML5_video -->
+          <!-- https://iandevlin.com/blog/2016/05/html5/html5-video-and-multiple-track-display/ -->
+          <!-- https://www.iandevlin.com/blog/2016/05/html5/help-with-webvtt/ -->
+          
+          <track 
+            kind="subtitles" 
+            label="English subtitle" 
+            src="media/json/sample-en.vtt" 
+            srclang="en" 
+            default
+          >
 
+        </video>
         <!-- Video Comments  -->
         <video-comments :comment="commentInTime" :media="media && media.currentTime" />
     </div>
@@ -101,7 +116,7 @@ export default {
     videoClicked(event) {
       const rect = this.videoContainer.getBoundingClientRect();
       const {layerX, layerY, offsetX, offsetY} = event
-      // console.log('current time', this.media.currentTime, rect, layerX, layerY, offsetX, offsetY);
+      console.log('current time', rect, layerX, layerY, offsetX, offsetY, event);
       
       if (Math.abs(layerX - offsetX) < 5) {
         this.userClicks.push({currentTime: this.media.currentTime, offsetX, offsetY});
