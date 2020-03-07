@@ -90,3 +90,16 @@ button:before {
   color: #aaa;
   text-shadow: 1px 1px 0px black;
 }
+
+button.rating {
+  width: 50px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 1px solid indigo;
+  background-color: indigo;
+  outline: none;
+}
+
+button.rating i {
+  color: white;
+}
