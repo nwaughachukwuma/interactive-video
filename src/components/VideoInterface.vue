@@ -5,7 +5,11 @@
       <reactivity-table :userClicks="userClicks" />
     </div>
     <!-- Video player component -->
-    <video-player :options="videoOptions" @videoClicked="videoClicked" />
+    <video-player 
+      ref="videoPlayer"
+      :options="videoOptions" 
+      @videoClicked="videoClicked" 
+    />
     <!-- Play list with thumbnails -->
     <play-list />
   </div>
@@ -40,13 +44,17 @@ export default {
           }
         ]
       },
-      userClicks: []
+      userClicks: [],
+      videoPlayerMedia: null
     };
   },
   methods: {
     videoClicked({ data }) {
       this.userClicks = data;
     }
+  },
+  mounted() {
+    this.videoPlayerMedia = this.$refs.videoPlayer.$refs.videoEl;
   }
 };
 </script>

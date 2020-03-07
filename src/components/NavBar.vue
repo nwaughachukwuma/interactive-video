@@ -12,6 +12,14 @@
             <i class="fa fa-home"></i>
             Home
           </b-nav-item>
+          <b-nav-item
+            data-cy="nav-bar-chart"
+            @click="$emit('toggleChart')"
+            style="border: 1px solid white; border-radius: 5px"
+          >
+            <i class="fa fa-bar-chart"></i>
+            Visualize interaction
+          </b-nav-item>
         </b-navbar-nav>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">

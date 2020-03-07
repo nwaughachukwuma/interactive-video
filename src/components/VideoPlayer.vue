@@ -10,6 +10,8 @@
           :controls="options.controls"
           :autoplay="options.autoplay"
           preload="metadata"
+          @timeupdate="setTime"
+          @ended="stopMedia"
         >
           <source :src="options.sources[0].src" :type="options.sources[0].type" />
           <source :src="options.sources[1].src" :type="options.sources[1].type" />
@@ -137,17 +139,16 @@ export default {
     this.media = this.$refs.videoEl;
     this.media.removeAttribute("controls");
     // add event listeners to the media element
-    this.media.addEventListener("ended", this.stopMedia);
-    this.media.addEventListener("timeupdate", this.setTime);
+    // this.media.addEventListener("ended", this.stopMedia);
   },
   watch: {
     playbackLoop: {
       handler(val) {
+        // deprecated for web.vtt file
         // const comments = Comments.comments || [];
         // if (comments.length) {
         //   this.commentInTime = comments.find(el =>  el.time === +val) || {}
         // }
-
         // get the video comments from webvtt file
         const textTracks = this.media.textTracks[0];
         if (textTracks && textTracks.cues) {

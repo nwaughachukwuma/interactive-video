@@ -35,6 +35,9 @@ export default {
   methods: {
     playPauseMedia() {
       if (this.media.paused) {
+        // if (this.media.currentTime < this.media.duration - 1) {
+        //   this.playIcon = "fa-pause";
+        // }
         this.playIcon = "fa-pause";
         this.media.play();
       } else {
@@ -56,7 +59,9 @@ export default {
       handler(val) {
         // attempt to autoplay and handle cases where the browser does not support it
         if (val && val.paused) {
-          val.play().catch(() => (this.playIcon = "fa-play"));
+          val.play()
+            .then(() => {this.playIcon = "fa-pause"})
+            .catch(() => {this.playIcon = "fa-play"});
         }
       },
       immediate: true
