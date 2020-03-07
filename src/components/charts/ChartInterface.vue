@@ -103,7 +103,7 @@ export default {
         datasets: [
           {
             backgroundColor: "#f87979",
-            label: "Moment ratings",
+            label: "Moment ratings 🌟",
             data: this.videoRating.map(el => el.value),
           }
         ]

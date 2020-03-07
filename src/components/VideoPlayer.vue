@@ -145,25 +145,25 @@ export default {
     playbackLoop: {
       handler(val) {
         // deprecated for web.vtt file
-        // const comments = Comments.comments || [];
-        // if (comments.length) {
-        //   this.commentInTime = comments.find(el =>  el.time === +val) || {}
-        // }
-        // get the video comments from webvtt file
-        const textTracks = this.media.textTracks[0];
-        if (textTracks && textTracks.cues) {
-          const activeCue = Object.values(textTracks.cues)
-            .find(el => el.startTime === +val);
-
-          if (activeCue) {
-            this.commentInTime = {
-              text: activeCue.text.replace(/(<([^>]+)>)/ig, ''),
-              time: activeCue.startTime,
-              id: activeCue.id,
-              mediaTime: this.extractMediaTime(+val)
-            }
-          }
+        const comments = Comments.comments || [];
+        if (comments.length) {
+          this.commentInTime = comments.find(el =>  el.time === +val) || {}
         }
+        // get the video comments from webvtt file
+        // const textTracks = this.media.textTracks[0];
+        // if (textTracks && textTracks.cues) {
+        //   const activeCue = Object.values(textTracks.cues)
+        //     .find(el => el.startTime === +val);
+
+        //   if (activeCue) {
+        //     this.commentInTime = {
+        //       text: activeCue.text.replace(/(<([^>]+)>)/ig, ''),
+        //       time: activeCue.startTime,
+        //       id: activeCue.id,
+        //       mediaTime: this.extractMediaTime(+val)
+        //     }
+        //   }
+        // }
       },
       immediate: false
     }
