@@ -16,6 +16,8 @@
         Ended: {{videoEnded || videoWatched == 0}}
       </b-card-text>
       <line-chart :chart-data="datacollection"></line-chart>
+      
+      <b-button variant="dark" @click="fillData()">Randomize</b-button>
       <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
 
       <b-card-footer footer-class="chart-footer">
@@ -52,9 +54,7 @@ export default {
       videoPaused: false,
       videoPlaying: false,
       videoEnded: true,
-      videoWatched: 0,
-      videoLabel: [],
-      videoData: [0]
+      videoWatched: 0
     };
   },
   computed: {
@@ -63,45 +63,37 @@ export default {
     }
   },
   mounted() {
-    this.reloadData();
+    this.fillData();
   },  
   methods: {
-    reloadData() {
+    fillData() {
       this.datacollection = {
-        labels: this.videoLabel,
+        labels: [this.getRandomInt(), this.getRandomInt()],
         datasets: [
-        //   {
-        //     label: "Data One",
-        //     backgroundColor: "#f87979",
-        //     data: [this.getRandomInt(), this.getRandomInt()]
-        //   },
-        //   {
-        //     label: "Data two",
-        //     backgroundColor: "#488AFF",
-        //     data: [this.getRandomInt(), this.getRandomInt()]
-        //   },
-           {
-            // label: "Video Watched",
+          {
+            label: "Data One",
             backgroundColor: "#f87979",
-            // data: this.videoLabel,
-            label: '% Watched',
-            data: this.videoData,
+            data: [this.getRandomInt(), this.getRandomInt()]
+          },
+          {
+            label: "Data two",
+            backgroundColor: "#488AFF",
+            data: [this.getRandomInt(), this.getRandomInt()]
           }
         ]
       };
     },
+    getRandomInt() {
+      return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
+    },
     timeUpdateFunc(evt) {
-        // console.log('reading time', evt.srcElement.paused)
+        console.log('reading time', evt.srcElement.paused)
         this.videoPaused = evt.srcElement.paused;
         this.videoEnded = evt.srcElement.ended;
-        // console.log('video paused >>>', evt.srcElement)
+        console.log('video paused >>>', evt.srcElement)
         const videoWatched = 
             (evt.srcElement.currentTime / evt.srcElement.duration) * 100
         this.videoWatched = videoWatched.toFixed(2);
-        this.videoLabel.push(this.videoWatched);
-        this.videoData.push(+evt.srcElement.currentTime.toFixed(2));
-
-        this.reloadData();
         this.$forceUpdate;
     }
   },
