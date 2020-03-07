@@ -130,12 +130,6 @@ export default {
         if (val) {
           val.ontimeupdate = this.timeUpdateFunc;
         }
-        console.log(val.played);
-      }
-    },
-    videoRating: {
-      handler(val) {
-        console.log(val);
       }
     }
   }

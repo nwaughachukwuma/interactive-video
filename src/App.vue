@@ -36,7 +36,7 @@ export default Vue.extend({
     }
   },
   mounted() {
-    this.videoPlayerMedia = this.$refs.videoInterface.$refs.videoPlayer.$refs.videoEl;
+    this.videoPlayerMedia = this.$refs.videoInterface!.$refs.videoPlayer.$refs.videoEl;
     this.$root.$on('videoRated', this.videoRated);
   },
   methods: {
