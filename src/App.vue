@@ -6,6 +6,7 @@
       <chart-interface 
         :showChart="showChart"
         :videoPlayerMedia="videoPlayerMedia"
+        :videoRating="videoRating"
         @showChart="toggleChart" 
       />
       <!-- video-interface -->
@@ -30,15 +31,20 @@ export default Vue.extend({
   data() {
     return {
       showChart: false,
-      videoPlayerMedia: null
+      videoPlayerMedia: null,
+      videoRating: [] as any[]
     }
   },
   mounted() {
     this.videoPlayerMedia = this.$refs.videoInterface.$refs.videoPlayer.$refs.videoEl;
+    this.$root.$on('videoRated', this.videoRated);
   },
   methods: {
     toggleChart() {
       this.showChart = !this.showChart? true: false
+    },
+    videoRated({data}: any) {
+      this.videoRating = data
     }
   }
 });

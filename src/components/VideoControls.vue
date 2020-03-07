@@ -36,6 +36,7 @@
               size="sm" 
               variant="primary"  
               class="submit-rating"
+              @click="submitRating"
             >
               Submit
             </b-button>
@@ -67,7 +68,8 @@ export default {
       timerBar: null,
       playIcon: "fa-pause",
       ratingModal: false,
-      rateValue: 1
+      rateValue: 1,
+      videoRatings: []
     };
   },
   methods: {
@@ -86,9 +88,14 @@ export default {
     rateMoment() {
       this.playIcon = "fa-play";
       this.media.pause();
-      // show a modal for moment rating
       this.ratingModal = true
-      console.log('viewer can rate moment here')
+    },
+    submitRating() {
+      this.videoRatings.push({value: +this.rateValue, time: this.media.currentTime});
+      this.rateValue = 1;
+      // emit event at the root component
+      this.$root.$emit('videoRated', {data: this.videoRatings})
+      this.ratingModal = false;
     }
   },
   mounted() {
@@ -121,7 +128,6 @@ export default {
     },
     ratingModal: {
       handler(val) {
-        console.log('rating modal', val)
         if (!val) {
           this.playIcon = "fa-pause";
           this.media.play();
