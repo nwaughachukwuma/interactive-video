@@ -1,7 +1,12 @@
 <template>
   <b-container fluid>
     <div class="video-controls" ref="videoControlsEl">
-      <button class="play" data-icon="P" aria-label="play pause toggle" @click="playPauseMedia">
+      <button 
+        class="play" 
+        data-icon="P" 
+        aria-label="play pause toggle" 
+        @click="playPauseMedia"
+      >
         <i :class="'fa ' + playIcon"></i>
       </button>
       <div class="timer" ref="timerWrapperEl">
@@ -29,7 +34,7 @@
         <b-row class="my-1">
           <b-col sm="6">
             <!-- <input v-model="rateValue" type="number" step="1" min="1" max="10" name="" id="rate-value"> -->
-            <b-form-input size="lg" v-model="rateValue" type="number" step="1" min="1" max="10" name="rate-value" id="rate-value" placeholder="Enter your name"></b-form-input>
+            <b-form-input class="rating-value" size="lg" v-model="rateValue" type="number" step="1" min="1" max="10" name="rate-value" id="rate-value" placeholder="Rate video moment"></b-form-input>
           </b-col>
           <b-col sm="3">
             <b-button 

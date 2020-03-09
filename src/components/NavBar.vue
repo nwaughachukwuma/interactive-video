@@ -16,6 +16,7 @@
             data-cy="nav-bar-chart"
             @click="$emit('toggleChart')"
             style="border: 1px solid white; border-radius: 5px"
+            class="toggle-visualizer"
           >
             <i class="fa fa-bar-chart"></i>
             Visualize interaction

@@ -8,7 +8,7 @@
       text-variant="primary"
       border-variant="primary"
     >
-      <b-card-text>
+      <b-card-text class="active-interaction">
         Paused: {{videoPaused}}
         <br />
         Watched: {{videoWatched}}%
