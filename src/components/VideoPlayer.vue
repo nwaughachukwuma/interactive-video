@@ -122,12 +122,12 @@ export default {
     videoClicked(event) {
       const rect = this.videoContainer.getBoundingClientRect();
       const {layerX, layerY, offsetX, offsetY} = event
-      console.log('current time', rect, layerX, layerY, offsetX, offsetY, event);
+      // console.log('current time', rect, layerX, layerY, offsetX, offsetY, event);
       
       if (Math.abs(layerX - offsetX) < 5) {
         this.userClicks.push({currentTime: this.media.currentTime, offsetX, offsetY});
+        this.$emit('videoClicked', {data: this.userClicks});
       }
-      this.$emit('videoClicked', {data: this.userClicks});
     }
   },
   mounted() {

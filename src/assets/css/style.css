@@ -11,6 +11,9 @@
 
 .video-container {
   position: relative;
+
+  width: 66%;
+  margin: 0 auto;
 }
 
 .video-container video {
@@ -19,6 +22,7 @@
 
     position: relative;
     z-index: 0;
+    width: 100%;
 }
 
 .video-controls {
