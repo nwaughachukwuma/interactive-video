@@ -2,7 +2,12 @@
   <div class="player">
 
     <!-- Video container -->
-    <div class="video-container" ref="videoContainer" @click="videoClicked">
+    <div 
+      class="video-container" 
+      ref="videoContainer" 
+      @click="videoClicked" 
+      v-stream:click="saveToFirestore$"
+    >
         <video 
           ref="videoEl" 
           class="animated fadeInDownBig duration-3s"
@@ -48,6 +53,15 @@
 import VideoControls from './VideoControls'
 import VideoComments from './VideoComments'
 import Comments from '@/assets/json/comments.json'
+
+import {interval} from 'rxjs'
+import {
+  map,
+  startWith,
+  scan,
+  filter,
+  throttleTime
+} from 'rxjs/operators'
 
 import {
   getDocuments, 
@@ -156,6 +170,21 @@ export default {
       } 
     }
   },
+  domStreams: ["saveToFirestore$"],
+  subscriptions() {
+    return {
+      counter: interval(1000).pipe(
+        throttleTime(2000),
+        filter(v => (v % 2 === 0))
+      ),
+      clickCount: this.saveToFirestore$.pipe(
+        throttleTime(500),
+        map(() => 1),
+        startWith(0),
+        scan((total, change) => total + change)
+      )
+    }
+  },
   beforeMount() {
     fetch('https://api.ipify.org?format=jsonp&callback=?')
     .then(res => res.text()) 
@@ -184,14 +213,34 @@ export default {
     const userDocs = await getDocuments('video-interactions')
       .then(res => console.log(res));
   },
+  created() {
+    // using vm.$watch to watch rxjs subscriptions: clickCount
+    this.$watch('clickCount', async (val) => {
+      console.log('watching rxjs subject to save clicks to firebase', val);
+
+      try {
+        const clickRef = await getCollectionRef('video-interactions')
+          .where('sessionStartAt', '==', this.videoSession)
+          .where('userIp', '==', this.userIp)
+          .get();
+
+        if (!clickRef.empty) {
+          const curSnap = clickRef.docs[0];
+          curSnap.ref.update({clickCount: val, updatedAt: Date.now()})
+        }
+      } catch (error) {
+        console.log('error updating video click count')
+      }
+    })
+  },
   watch: {
     userIp: {
       handler(ip) {
         if (ip) {
-          // insertDocument('video-interactions', {
-          //   sessionStartAt: this.videoSession,
-          //   userIp: ip
-          // })
+          insertDocument('video-interactions', {
+            sessionStartAt: this.videoSession,
+            userIp: ip
+          })
         }
       },
       immediate: false
