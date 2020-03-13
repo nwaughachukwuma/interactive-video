@@ -49,6 +49,15 @@ import VideoControls from './VideoControls'
 import VideoComments from './VideoComments'
 import Comments from '@/assets/json/comments.json'
 
+import {
+  getDocuments, 
+  getDocument, 
+  setDocument,
+  updateDocument,
+  insertDocument,
+  deleteDocument
+} from '@/config/firebase/handlers'
+
 export default {
   name: "VideoPlayer",
   components: {
@@ -130,7 +139,7 @@ export default {
       }
     }
   },
-  mounted() {
+  async mounted() {
     this.controls = this.$refs.videoControlsEl;
     this.controls.$refs.videoControlsEl.style.visibility = "visible";
 
@@ -140,6 +149,33 @@ export default {
     this.media.removeAttribute("controls");
     // add event listeners to the media element
     // this.media.addEventListener("ended", this.stopMedia);
+
+    // hook to firestore
+    console.log('get users collection');
+    const userDocs = await getDocuments('users')
+    .then(res => console.log(res));
+
+    console.log('get single user');
+    const singleUser = getDocument('users', 'wCOr8Ys3NF6fxva75hZF')
+      .then(res => console.log(res));
+
+    console.log('update a document');
+    updateDocument('users', 'wCOr8Ys3NF6fxva75hZF', {email: 'nwaughac@gmail.com'})
+      .then(
+        res => console.log(res)
+      )
+
+    // console.log('insert a document');
+    // insertDocument('users', {name: 'Godwin Ijemba', email: 'gwadyt@gmail.com'})
+    //   .then(
+    //     res => console.log(res)
+    //   )
+
+    // console.log('delete all documents');
+    deleteDocument('users', 'BJyjlrtSCneXNNbRJDTL')
+      .then(
+        res => console.log(res)
+      )
   },
   watch: {
     playbackLoop: {

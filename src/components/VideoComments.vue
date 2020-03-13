@@ -8,8 +8,8 @@
             class="mb-1 text-center animated fadeInUp duration-3s"
             v-if="!isEmpty(commentPlaceHolder)"
             bg-variant="dark" 
-            header="Video Comment 💬" 
-            header-tag="h4"
+            header="💬" 
+            header-tag="small"
             text-variant="white"
         >
             <b-card-text class="text-primary">
