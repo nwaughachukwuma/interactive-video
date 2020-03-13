@@ -14,14 +14,38 @@
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="/__/firebase/7.9.3/firebase-app.js"></script>
+    <!-- <script src="/__/firebase/7.9.3/firebase-app.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
         https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="/__/firebase/7.9.3/firebase-analytics.js"></script>
-
+    <!-- <script src="/__/firebase/7.9.3/firebase-analytics.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-analytics.js"></script>
+    <!-- Add firestore -->
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-firestore.js"></script>
+    
     <!-- Initialize Firebase -->
-    <script src="/__/firebase/init.js"></script>
+    <!-- <script src="/__/firebase/init.js"></script> -->
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyClPCMVRVCK4J8tkjHJkrO1ikteGzF0RU8",
+        authDomain: "interactive-video-6f911.firebaseapp.com",
+        databaseURL: "https://interactive-video-6f911.firebaseio.com",
+        projectId: "interactive-video-6f911",
+        storageBucket: "interactive-video-6f911.appspot.com",
+        messagingSenderId: "1009175395417",
+        appId: "1:1009175395417:web:79f2b1d003e01e68d88548",
+        measurementId: "G-MS1RPE0PTR"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+      // save firebase and firestore to the global object
+      window.firebase = firebase;
+      window.firestore = firebase.firestore();
+    </script>
 
     <div id="app"></div>
     <!-- built files will be auto injected -->

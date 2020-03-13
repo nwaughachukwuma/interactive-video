@@ -1,0 +1,29 @@
+[debug] [2020-03-13T09:20:16.346Z] ----------------------------------------------------------------------
+[debug] [2020-03-13T09:20:16.348Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2020-03-13T09:20:16.349Z] CLI Version:   7.12.1
+[debug] [2020-03-13T09:20:16.349Z] Platform:      darwin
+[debug] [2020-03-13T09:20:16.349Z] Node Version:  v10.16.2
+[debug] [2020-03-13T09:20:16.349Z] Time:          Fri Mar 13 2020 10:20:16 GMT+0100 (West Africa Standard Time)
+[debug] [2020-03-13T09:20:16.349Z] ----------------------------------------------------------------------
+[debug] [2020-03-13T09:20:16.349Z] 
+[debug] [2020-03-13T09:20:16.372Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-03-13T09:20:16.373Z] > authorizing via signed-in user
+[debug] [2020-03-13T09:20:16.373Z] [iam] checking project interactive-video-6f911 for permissions ["firebase.projects.get"]
+[debug] [2020-03-13T09:20:16.375Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-03-13T09:20:16.375Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-03-13T09:20:17.262Z] <<< HTTP RESPONSE 200
+[debug] [2020-03-13T09:20:17.295Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/interactive-video-6f911:testIamPermissions  
+
+[debug] [2020-03-13T09:20:19.477Z] <<< HTTP RESPONSE 200
+[debug] [2020-03-13T09:20:19.478Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/interactive-video-6f911  
+ 
+[debug] [2020-03-13T09:20:20.582Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/mac/Desktop/Software/dev/web/javascript/dev-challenge/latitude/interactive-video'...
+[info] 
+[debug] [2020-03-13T09:20:20.586Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/interactive-video-6f911/webApps/-/config  
+ 
+[debug] [2020-03-13T09:20:21.934Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: dist
+[info] ✔  hosting: Local server: http://localhost:5000
