@@ -55,7 +55,8 @@ import {
   setDocument,
   updateDocument,
   insertDocument,
-  deleteDocument
+  deleteDocument,
+  getCollectionRef
 } from '@/config/firebase/handlers'
 
 export default {
@@ -85,7 +86,9 @@ export default {
       userClicks: [],
       playIcon: 'fa-pause',
       playbackLoop: null,
-      commentInTime: {}
+      commentInTime: {},
+      videoSession: null,
+      userIp: null
     };
   },
   methods: {
@@ -135,9 +138,34 @@ export default {
       
       if (Math.abs(layerX - offsetX) < 5) {
         this.userClicks.push({currentTime: this.media.currentTime, offsetX, offsetY});
+        
+        this.saveClickToFirestore({currentTime: this.media.currentTime, offsetX, offsetY})
         this.$emit('videoClicked', {data: this.userClicks});
       }
+    },
+    async saveClickToFirestore(data) {
+      const clickRef = await getCollectionRef('video-interactions')
+          .where('sessionStartAt', '==', this.videoSession)
+          .where('userIp', '==', this.userIp)
+          .get();
+
+      if (!clickRef.empty) {
+        const curSnap = clickRef.docs[0];
+        curSnap.ref.collection('clicks')
+          .add({...data, createdAt: Date.now()})
+      } 
     }
+  },
+  beforeMount() {
+    fetch('https://api.ipify.org?format=jsonp&callback=?')
+    .then(res => res.text()) 
+    .then(result => {
+      const regex = /[^?();]+/ig
+      let cleanedRes = result.match(regex)[0]
+      cleanedRes = JSON.parse(cleanedRes);
+      this.userIp = cleanedRes.ip;
+    })
+    .catch(err => console.log(err));
   },
   async mounted() {
     this.controls = this.$refs.videoControlsEl;
@@ -150,34 +178,24 @@ export default {
     // add event listeners to the media element
     // this.media.addEventListener("ended", this.stopMedia);
 
+    this.videoSession = Date.now();
     // hook to firestore
-    console.log('get users collection');
-    const userDocs = await getDocuments('users', {lhs: 'id', condition: '==', rhs: 'wCOr8Ys3NF6fxva75hZF'})
+    console.log('get video-interactions collection');
+    const userDocs = await getDocuments('video-interactions')
       .then(res => console.log(res));
-
-    console.log('get single user');
-    const singleUser = getDocument('users', 'wCOr8Ys3NF6fxva75hZF')
-      .then(res => console.log(res));
-
-    console.log('update a document');
-    updateDocument('users', 'wCOr8Ys3NF6fxva75hZF', {email: 'nwaughac@gmail.com'})
-      .then(
-        res => console.log(res)
-      )
-
-    // console.log('insert a document');
-    // insertDocument('users', {name: 'Godwin Ijemba', email: 'gwadyt@gmail.com'})
-    //   .then(
-    //     res => console.log(res)
-    //   )
-
-    // console.log('delete all documents');
-    deleteDocument('users', 'BJyjlrtSCneXNNbRJDTL')
-      .then(
-        res => console.log(res)
-      )
   },
   watch: {
+    userIp: {
+      handler(ip) {
+        if (ip) {
+          // insertDocument('video-interactions', {
+          //   sessionStartAt: this.videoSession,
+          //   userIp: ip
+          // })
+        }
+      },
+      immediate: false
+    },
     playbackLoop: {
       handler(val) {
         // deprecated for web.vtt file
