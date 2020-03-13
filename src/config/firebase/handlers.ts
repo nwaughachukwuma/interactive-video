@@ -3,7 +3,8 @@
  */
 
 import { firestore } from './firebase-config'
-import {Log} from './logger'
+import { Log } from './logger'
+import { WhereClause } from './types'
 
 export const getCollectionRef = (colName: string) => {
     return firestore.collection(colName)
@@ -13,17 +14,27 @@ export const getDocumentRef = (colName: string, docId: string) => {
     return firestore.doc(`${colName}/${docId}`);
 }
 
-export const getDocuments = async (colName: string) => {
+export const getDocuments = async (colName: string, where: WhereClause) => {
 
-    return await firestore.collection(colName)
-        .get()
-        .then((snaps: any) => {
-            return snaps.docs.map((snap: any) => ({...snap.data(), id: snap.id}))
-        })
-        .catch((e: any) => {
-            Log('error', e)
-            throw new Error(e.message)
-        })
+    let colls;
+    if (where) {
+        colls = firestore.collection(colName).where(
+            where.lhs, 
+            where.condition, 
+            where.rhs
+        )
+    } else {
+        colls = firestore.collection(colName)   
+    }            
+    
+    return await colls.get()
+            .then((snaps: any) => {
+                return snaps.docs.map((snap: any) => ({...snap.data(), id: snap.id}))
+            })
+            .catch((e: any) => {
+                Log('error', e)
+                throw new Error(e.message)
+            })
 }
 
 export const getDocument = async (colName: string, docId: string) => {

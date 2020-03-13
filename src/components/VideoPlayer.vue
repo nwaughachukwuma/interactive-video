@@ -152,8 +152,8 @@ export default {
 
     // hook to firestore
     console.log('get users collection');
-    const userDocs = await getDocuments('users')
-    .then(res => console.log(res));
+    const userDocs = await getDocuments('users', {lhs: 'id', condition: '==', rhs: 'wCOr8Ys3NF6fxva75hZF'})
+      .then(res => console.log(res));
 
     console.log('get single user');
     const singleUser = getDocument('users', 'wCOr8Ys3NF6fxva75hZF')
