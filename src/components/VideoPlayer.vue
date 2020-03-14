@@ -54,12 +54,10 @@ import VideoControls from './VideoControls'
 import VideoComments from './VideoComments'
 import Comments from '@/assets/json/comments.json'
 
-import {interval} from 'rxjs'
 import {
   map,
   startWith,
   scan,
-  filter,
   throttleTime
 } from 'rxjs/operators'
 
@@ -173,10 +171,6 @@ export default {
   domStreams: ["saveToFirestore$"],
   subscriptions() {
     return {
-      counter: interval(1000).pipe(
-        throttleTime(2000),
-        filter(v => (v % 2 === 0))
-      ),
       clickCount: this.saveToFirestore$.pipe(
         throttleTime(500),
         map(() => 1),
