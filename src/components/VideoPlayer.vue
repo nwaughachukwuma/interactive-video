@@ -54,6 +54,7 @@ import VideoControls from './VideoControls'
 import VideoComments from './VideoComments'
 import Comments from '@/assets/json/comments.json'
 
+import {interval} from 'rxjs'
 import {
   map,
   startWith,
@@ -165,12 +166,23 @@ export default {
         const curSnap = clickRef.docs[0];
         curSnap.ref.collection('clicks')
           .add({...data, createdAt: Date.now()})
+
+        this.$socket.client.emit('stream_data', {
+          ...data, 
+          sessionStartAt: this.videoSession,
+          userIp: this.userIp,
+          createdAt: Date.now()
+        });
       } 
     }
   },
   domStreams: ["saveToFirestore$"],
   subscriptions() {
     return {
+      streamCount: interval(1000).pipe(
+        // map(() => 1),
+        // startWith(0)
+      ),
       clickCount: this.saveToFirestore$.pipe(
         throttleTime(500),
         map(() => 1),
@@ -208,6 +220,15 @@ export default {
       .then(res => console.log(res));
   },
   created() {
+    // using vm.$watch to watch rxjs subscriptions: streamCount
+    this.$watch('streamCount', function (val) {
+      console.log('stream count is count')
+      this.$socket.client.emit('stream_data', {
+        count: val, 
+        sessionStartAt: this.videoSession,
+        userIp: this.userIp
+      });
+    })
     // using vm.$watch to watch rxjs subscriptions: clickCount
     this.$watch('clickCount', async (val) => {
       console.log('watching rxjs subject to save clicks to firebase', val);
