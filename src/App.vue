@@ -20,9 +20,11 @@ import Vue from 'vue';
 import NavBar from '@/components/NavBar.vue';
 import VideoInterface from '@/components/VideoInterface.vue'
 import ChartInterface from '@/components/charts/ChartInterface.vue'
+import KafkaConnect from '@/mixins/socket'
 
 export default Vue.extend({
   name: 'App',
+  mixins: [KafkaConnect],
   components: {
     NavBar,
     VideoInterface,
@@ -36,8 +38,10 @@ export default Vue.extend({
     }
   },
   mounted() {
+    // eslint-disable-next-line
     this.videoPlayerMedia = this.$refs.videoInterface!.$refs.videoPlayer.$refs.videoEl;
     this.$root.$on('videoRated', this.videoRated);
+    
   },
   methods: {
     toggleChart() {
@@ -46,7 +50,7 @@ export default Vue.extend({
     videoRated({data}: any) {
       this.videoRating = data
     }
-  }
+  },
 });
 </script>
 

@@ -11,6 +11,7 @@
     "deploy:firebase": "yarn build && firebase deploy"
   },
   "dependencies": {
+    "@types/socket.io-client": "^1.4.32",
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.1.0",
     "chart.js": "^2.9.3",
@@ -18,9 +19,11 @@
     "faker": "^4.1.0",
     "register-service-worker": "^1.6.2",
     "rxjs": "^6.5.4",
+    "socket.io-client": "^2.3.0",
     "vue": "^2.6.11",
     "vue-chartjs": "^3.5.0",
-    "vue-rx": "^6.2.0"
+    "vue-rx": "^6.2.0",
+    "vue-socket.io-extended": "^4.0.1"
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",
