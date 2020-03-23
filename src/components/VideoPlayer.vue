@@ -179,10 +179,7 @@ export default {
   domStreams: ["saveToFirestore$"],
   subscriptions() {
     return {
-      streamCount: interval(1000).pipe(
-        // map(() => 1),
-        // startWith(0)
-      ),
+      streamCount: interval(1000).pipe(),
       clickCount: this.saveToFirestore$.pipe(
         throttleTime(500),
         map(() => 1),
